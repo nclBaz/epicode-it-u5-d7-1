@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import riccardogulin.u5d7.entities.User;
+import riccardogulin.u5d7.exceptions.NotFoundException;
 import riccardogulin.u5d7.services.UsersService;
 
 @RestController
@@ -39,21 +40,21 @@ public class UsersController {
 
 	// 3. - GET http://localhost:3001/users/:userId <-- READ
 	@GetMapping("/{userId}")
-	public User findById(@PathVariable int userId) throws Exception {
-		return usersService.findUserById(userId).orElseThrow(() -> new Exception("Utente non trovato"));
+	public User findById(@PathVariable int userId) {
+		return usersService.findUserById(userId).orElseThrow(() -> new NotFoundException(userId));
 	}
 
 	// 4. - PUT http://localhost:3001/users/:userId (+ req.body) <-- UPDATE
 	@PutMapping("/{userId}")
-	public User findByIdAndUpdate(@PathVariable int userId, @RequestBody User body) throws Exception {
-		return usersService.findUserByIdAndUpdate(userId, body).orElseThrow(() -> new Exception("Utente non trovato"));
+	public User findByIdAndUpdate(@PathVariable int userId, @RequestBody User body) {
+		return usersService.findUserByIdAndUpdate(userId, body).orElseThrow(() -> new NotFoundException(userId));
 	}
 
 	// 5. - DELETE http://localhost:3001/users/:userId <-- DELETE
 	@DeleteMapping("/{userId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
-	public void findByIdAndDelete(@PathVariable int userId) throws Exception {
-		usersService.findUserByIdAndDelete(userId).orElseThrow(() -> new Exception("Utente non trovato"));
+	public void findByIdAndDelete(@PathVariable int userId) {
+		usersService.findUserByIdAndDelete(userId).orElseThrow(() -> new NotFoundException(userId));
 	}
 
 }

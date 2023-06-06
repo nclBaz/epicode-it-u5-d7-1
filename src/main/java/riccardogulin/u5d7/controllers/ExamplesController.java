@@ -97,4 +97,9 @@ public class ExamplesController {
 																		// statuscode
 
 	}
+
+	@GetMapping("/kaboom")
+	public void kaboom() throws Exception {
+		throw new Exception("KABOOOOOOOOOOOOOOOOOOOM");
+	}
 }
